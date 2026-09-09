@@ -10,9 +10,10 @@
 [![license](https://img.shields.io/badge/license-Big_Time-blue?style=flat-square)](LICENSE)
 
 
-`<package description goes here>`
+Draw things on an HTML canvas. This is a fork of
+[jakubfiala/atrament](https://github.com/jakubfiala/atrament).
 
-[See a live demo](https://namespace.github.io/package-name/)
+[See a live demo](https://nichoth.github.io/drerer/)
 
 <details><summary><h2>Contents</h2></summary>
 <!-- toc -->
@@ -20,29 +21,49 @@
 
 ## Install
 
-Installation instructions
-
 ```sh
 npm i -S drerer
 ```
 
 ## Example
 
-`usage instructions here`
-
 ### JS
 ```js
 import Atrament, { MODE_DRAW } from 'drerer'
+import fill from 'drerer/fill?worker'
+
+const side = Math.max(1, Math.floor(
+    Math.min(canvas.offsetWidth, canvas.offsetHeight)
+))
+
+const atrament = new Atrament(document.getElementById('sketchpad'), {
+    width: side,
+    height: side,
+    ignoreModifiers: true,
+    weight: brushSize.value,
+    fill
+})
+
+atrament.smoothing = 0.7
+atrament.color = '#000000'
+atrament.addEventListener('dirty', () => {
+    console.log('canvas is dirty...')
+})
+atrament.addEventListener('clean', () => {
+    console.log('canvas is clean')
+})
+
+// ...sometime in the future...
+atrament.destroy()
 ```
 
 ## Modules
 
-This exposes ESM and common JS via [package.json `exports` field](https://nodejs.org/api/packages.html#exports).
+This exposes ESM and common JS via
+[package.json `exports` field](https://nodejs.org/api/packages.html#exports).
 
-The minified files are standalone bundles — all of their code is included in
-the same file. The readable ESM entry (`import 'drerer'`) is the only artifact
-that keeps module imports, referencing the readable module tree shipped in
-`dist`.
+The minified files are standalone bundles. All of their code is included in
+the same file.
 
 ### ESM
 ```js
@@ -68,7 +89,7 @@ const Atrament = require('drerer/min')
 
 ### UMD
 
-A UMD bundle is available by explicit path, readable or minified:
+A UMD bundle is available by explicit path.
 
 ```js
 const Atrament = require('drerer/umd')
@@ -98,8 +119,8 @@ The minified UMD bundle is also what `unpkg` and `jsdelivr` serve:
 
 ### Fill worker
 
-The fill-worker entry — used for flood filling outside the main drawing
-module — is exposed separately, as ESM or CommonJS:
+The fill-worker entry (used for flood filling outside the main drawing
+module) is exposed separately, as ESM or CommonJS:
 
 ```js
 import FillWorker from 'drerer/fill'
