@@ -1,37 +1,53 @@
 {
-  "private": true,
-  "type": "module",
+  "name": "drerer",
   "version": "0.0.0",
-  "main": "dist/index.js",
-  "files": [
-    "./dist/*"
-  ],
+  "description": "Draw things",
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/drerer.esm.js",
+      "require": "./dist/drerer.cjs",
+      "default": "./dist/drerer.esm.js"
     },
-    "./*": {
-      "import": [
-        "./dist/*.js",
-        "./dist/*"
-      ],
-      "require": [
-        "./dist/*.cjs",
-        "./dist/*"
-      ]
+    "./min": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/drerer.esm.min.js",
+      "require": "./dist/drerer.cjs.min.cjs",
+      "default": "./dist/drerer.esm.min.js"
+    },
+    "./umd": {
+      "default": "./dist/drerer.umd.js"
+    },
+    "./umd/min": {
+      "default": "./dist/drerer.umd.min.js"
+    },
+    "./fill": {
+      "types": "./dist/fill/index.d.ts",
+      "import": "./dist/drerer.fill.esm.js",
+      "require": "./dist/drerer.fill.cjs",
+      "default": "./dist/drerer.fill.esm.js"
     }
   },
+  "main": "dist/drerer.cjs",
+  "module": "dist/drerer.esm.js",
+  "types": "dist/index.d.ts",
+  "unpkg": "dist/drerer.umd.min.js",
+  "jsdelivr": "dist/drerer.umd.min.js",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "lint": "eslint \"./**/*.{ts,js}\"",
-    "test": "npm run build && esbuild ./test/index.ts --bundle | tapout",
-    "build-cjs": "esbuild src/*.ts --format=cjs --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --out-extension:.js=.cjs --sourcemap",
-    "build-cjs:min": "esbuild src/*.ts --format=cjs --minify --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --out-extension:.js=.min.cjs --sourcemap",
-    "build-esm": "esbuild src/*.ts --format=esm --metafile=dist/meta.json --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --sourcemap && tsc --emitDeclarationOnly --project tsconfig.build.json --outDir dist",
-    "build-esm:min": "esbuild ./src/*.ts --format=esm --keep-names --bundle --tsconfig=tsconfig.build.json --minify --out-extension:.js=.min.js --outdir=./dist --sourcemap",
+    "test": "npm run build && node --test test/package.test.mjs && esbuild ./test/index.ts --bundle | tapout",
+    "test:package": "node --test test/package.test.mjs",
+    "build": "node scripts/build.mjs",
     "build-example": "mkdir -p ./public && rm -rf ./public/* && VITE_DEBUG_MODE=staging vite --mode staging --base=\"/repo-name\" build",
     "build-docs": "typedoc ./src/index.ts",
-    "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && npm run build-esm && npm run build-esm:min && npm run build-cjs:min",
     "start": "vite",
     "toc": "markdown-toc --maxdepth 3 -i README.md",
     "preversion": "npm run lint",
@@ -42,16 +58,17 @@
   "devDependencies": {
     "@preact/preset-vite": "^2.10.5",
     "@substrate-system/debug": "^0.9.64",
-    "@substrate-system/tapout": "^0.0.38",
-    "@substrate-system/tapzero": "^0.10.15",
+    "@substrate-system/tapout": "^0.0.41",
+    "@substrate-system/tapzero": "^0.10.16",
     "auto-changelog": "^2.4.0",
     "browserslist": "^4.28.1",
-    "esbuild": "^0.27.0",
+    "esbuild": "^0.28.2",
     "eslint": "^10.6.0",
     "htm": "^3.1.1",
     "lightningcss": "^1.30.2",
     "markdown-toc": "^1.2.0",
     "newneostandard": "^0.14.1",
+    "nightralph": "^0.0.34",
     "preact": "^10.29.3",
     "tap-spec": "^5.0.0",
     "typedoc": "^0.28.9",
@@ -59,6 +76,19 @@
     "typescript-eslint": "^8.62.0",
     "vite": "^8.1.0"
   },
-  "author": "nichoth <nichoth@nichoth.com> (https://nichoth.com)",
-  "license": "SEE LICENSE IN LICENSE"
+  "keywords": [
+    "draw",
+    "atrament",
+    "canvas"
+  ],
+  "homepage": "https://github.com/nichoth/drerer",
+  "bugs": {
+    "url": "https://github.com/nichoth/drerer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nichoth/drerer.git"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "nichoth <nichoth@nichoth.com> (https://nichoth.com)"
 }

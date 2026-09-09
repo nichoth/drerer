@@ -1,7 +1,13 @@
 import { test } from '@substrate-system/tapzero'
-import { example } from '../src/index.js'
+import Atrament from '../src/index.js'
 
-test('example', async t => {
-    t.ok('ok', 'should be an example')
-    example()
+test('atrament', (t) => {
+    document.body.innerHTML += '<canvas id="root"></canvas>'
+    const atrament = new Atrament('#root')
+    t.ok(atrament, "Doesn't explode")
+})
+
+test('all done', () => {
+    // @ts-expect-error tests
+    window.testsFinished = true
 })

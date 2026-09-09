@@ -1,12 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example</title>
-</head>
-<body>
-    <div id="root"></div>
-    <script type="module" src="./index.ts"></script>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>atrament ~ demo</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"
+    />
+    <!-- 'classic' theme -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+    <script type="module" defer src="index.ts"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <form>
+      <h1>
+        Atrament
+        <button id="toolbar-toggle" type="button" aria-label="open toolbar">
+          ⚙️
+        </button>
+        <a
+          id="github"
+          href="https://github.com/jakubfiala/atrament"
+          title="Github"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg
+            height="36"
+            aria-hidden="true"
+            viewBox="0 0 16 16"
+            version="1.1"
+            width="36"
+            data-view-component="true"
+            class="octicon octicon-mark-github v-align-middle"
+          >
+            <path
+              fill="white"
+              d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"
+            ></path>
+          </svg>
+        </a>
+      </h1>
+
+      <section class="toolbar">
+        <div><input type="button" id="clear" value="Clear" hidden /></div>
+
+        <div>
+          <input id="recordButton" type="button" value="Record a stroke" />
+          <input
+            id="playButton"
+            type="button"
+            value="Clear & draw again"
+            hidden
+          />
+        </div>
+        <div>
+          <div><label for="weight">Thickness</label></div>
+          <input
+            type="range"
+            id="weight"
+            min="1"
+            max="40"
+            value="2"
+            step="0.1"
+            autocomplete="off"
+          />
+        </div>
+        <div>
+          <div><label for="smoothing">Smoothing</label></div>
+          <input
+            id="smoothing"
+            type="range"
+            min="0.1"
+            max="2"
+            value="0.85"
+            step="0.05"
+            autocomplete="off"
+          />
+        </div>
+        <div>
+          <input id="adaptive" type="checkbox" checked autocomplete="off" />
+          <label for="adaptive">Adaptive stroke</label>
+        </div>
+        <div>
+          <input id="secondary-eraser" type="checkbox" autocomplete="off" />
+          <label for="secondary-eraser">Use secondary mouse button to draw</label>
+        </div>
+        <details open>
+          <summary>Pressure settings</summary>
+          <div><label for="pressure-low">Pressure low</label></div>
+          <input
+            type="range"
+            id="pressure-low"
+            min="0"
+            max="1"
+            value="0"
+            step="0.1"
+            autocomplete="off"
+          />
+          <output id="pressure-low-output">0</output>
+          <div><label for="pressure-high">Pressure high</label></div>
+          <input
+            type="range"
+            id="pressure-high"
+            min="1"
+            max="10"
+            value="2"
+            step="0.1"
+            autocomplete="off"
+          />
+          <output id="pressure-high-output">2</output>
+          <div><label for="pressure-smoothing-input">Pressure Smoothing</label></div>
+          <input
+            id="pressure-smoothing-input"
+            type="range"
+            min="0.1"
+            max="1"
+            value="0.3"
+            step="0.01"
+            autocomplete="off"
+          />
+          <output id="pressure-smoothing-output">0.3</output>
+        </details>
+        <div>
+          <label for="mode">Mode</label>
+          <select id="mode" autocomplete="off">
+            <option value="draw" default>Draw</option>
+            <option value="fill" default>Fill</option>
+            <option value="erase" default>Erase</option>
+            <option value="disabled" default>Disabled</option>
+          </select>
+        </div>
+        <div>
+          <label>Color</label>
+          <div id="color-picker"></div>
+        </div>
+        <output id="events"></output>
+      </section>
+    </form>
+    <canvas id="sketcher"></canvas>
   </body>
 </html>
