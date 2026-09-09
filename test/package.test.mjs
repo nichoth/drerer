@@ -25,22 +25,14 @@ fs.writeFileSync(
 execFileSync(
     process.execPath,
     [path.join(root, 'scripts', 'build.mjs'), path.join(pkgDir, 'dist')],
-    { stdio:'inherit' }
+    { stdio: 'inherit' }
 )
 
 test.after(() => {
-    fs.rmSync(tmp, { recursive:true, force:true })
+    fs.rmSync(tmp, { recursive: true, force: true })
 })
 
-const expectedApi = {
-    default:'function',
-    MODE_DRAW:'string',
-    MODE_ERASE:'string',
-    MODE_FILL:'string',
-    MODE_DISABLED:'string',
-}
-
-const runNode = (file) => execFileSync(process.execPath, [file], { cwd:pkgDir }).toString()
+const runNode = (file) => execFileSync(process.execPath, [file], { cwd: pkgDir }).toString()
 const writeFile = (name, content) => {
     const filePath = path.join(pkgDir, name)
     fs.writeFileSync(filePath, content)
@@ -92,7 +84,7 @@ const drerer = require('drerer')
 console.log(JSON.stringify(api(drerer)))
     `)
     const result = JSON.parse(runNode(file))
-    assert.deepEqual(result, { default:'function', MODE_DRAW:'draw', MODE_ERASE:'erase', MODE_FILL:'fill', MODE_DISABLED:'disabled' })
+    assert.deepEqual(result, { default: 'function', MODE_DRAW: 'draw', MODE_ERASE: 'erase', MODE_FILL: 'fill', MODE_DISABLED: 'disabled' })
 })
 
 test('minified ESM import and minified CommonJS require resolve the same API', () => {
@@ -101,7 +93,7 @@ import Atrament, { MODE_DRAW, MODE_ERASE, MODE_FILL, MODE_DISABLED } from 'drere
 console.log(JSON.stringify(api({ default:Atrament, MODE_DRAW, MODE_ERASE, MODE_FILL, MODE_DISABLED })))
     `))
     const esmResult = JSON.parse(runNode(esmFile))
-    assert.deepEqual(esmResult, { default:'function', MODE_DRAW:'draw', MODE_ERASE:'erase', MODE_FILL:'fill', MODE_DISABLED:'disabled' })
+    assert.deepEqual(esmResult, { default: 'function', MODE_DRAW: 'draw', MODE_ERASE: 'erase', MODE_FILL: 'fill', MODE_DISABLED: 'disabled' })
 
     const cjsFile = writeFile('check-cjs-min.cjs', `
 const drerer = require('drerer/min')
@@ -114,7 +106,7 @@ console.log(JSON.stringify({
 }))
     `)
     const cjsResult = JSON.parse(runNode(cjsFile))
-    assert.deepEqual(cjsResult, { default:'function', MODE_DRAW:'draw', MODE_ERASE:'erase', MODE_FILL:'fill', MODE_DISABLED:'disabled' })
+    assert.deepEqual(cjsResult, { default: 'function', MODE_DRAW: 'draw', MODE_ERASE: 'erase', MODE_FILL: 'fill', MODE_DISABLED: 'disabled' })
 })
 
 test('readable and minified UMD files create globalThis.drerer with the same API as ESM', async () => {
@@ -294,7 +286,7 @@ const [r, g, b, a] = posted.result
 console.log(JSON.stringify({ r, g, b, a }))
     `)
     const result = JSON.parse(runNode(file))
-    assert.deepEqual(result, { r:255, g:0, b:0, a:255 })
+    assert.deepEqual(result, { r: 255, g: 0, b: 0, a: 255 })
 })
 
 test('every JavaScript artifact has an external source map', () => {
@@ -348,7 +340,7 @@ test('declarations are emitted', () => {
 })
 
 test('npm pack --dry-run includes only the intended distribution surface', () => {
-    const output = execFileSync('npm', ['pack', '--dry-run', '--json'], { cwd:pkgDir }).toString()
+    const output = execFileSync('npm', ['pack', '--dry-run', '--json'], { cwd: pkgDir }).toString()
     const [{ files }] = JSON.parse(output)
     const paths = files.map((file) => file.path)
 

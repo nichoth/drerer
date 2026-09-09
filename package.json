@@ -42,7 +42,7 @@
     "dist"
   ],
   "scripts": {
-    "lint": "eslint \"./**/*.{ts,js}\"",
+    "lint": "eslint \"./**/*.{ts,js,mjs}\"",
     "test": "npm run build && node --test test/package.test.mjs && esbuild ./test/index.ts --bundle | tapout",
     "test:package": "node --test test/package.test.mjs",
     "build": "node scripts/build.mjs",

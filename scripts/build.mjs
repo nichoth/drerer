@@ -24,8 +24,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 // argument (used by the package-level tests to build into a temp directory).
 const outDir = path.resolve(process.argv[2] || path.join(root, 'dist'))
 
-fs.rmSync(outDir, { recursive:true, force:true })
-fs.mkdirSync(outDir, { recursive:true })
+fs.rmSync(outDir, { recursive: true, force: true })
+fs.mkdirSync(outDir, { recursive: true })
 
 const common = {
     absWorkingDir: root,
@@ -43,7 +43,7 @@ const tscResult = spawnSync(process.execPath, [
     '--project', 'tsconfig.build.json',
     '--outDir', outDir,
     '--declarationDir', outDir,
-], { stdio:'inherit' })
+], { stdio: 'inherit' })
 
 if (tscResult.status !== 0) {
     process.exit(tscResult.status || 1)
@@ -102,7 +102,7 @@ const treeEntries = Object.keys(graph.metafile.inputs)
         out: input.replace(/^src\//, '').replace(/\.ts$/, ''),
     }))
 
-treeEntries.push({ in:'src/index.ts', out:'index' })
+treeEntries.push({ in: 'src/index.ts', out: 'index' })
 
 await esbuild.build({
     ...common,
@@ -135,9 +135,9 @@ const bundleMain = ({ outfile, format, minify = false, globalName }) => esbuild.
     outfile: path.join(outDir, outfile),
 })
 
-await bundleMain({ outfile:'drerer.cjs', format:'cjs' })
-await bundleMain({ outfile:'drerer.cjs.min.cjs', format:'cjs', minify:true })
-await bundleMain({ outfile:'drerer.esm.min.js', format:'esm', minify:true })
+await bundleMain({ outfile: 'drerer.cjs', format: 'cjs' })
+await bundleMain({ outfile: 'drerer.cjs.min.cjs', format: 'cjs', minify: true })
+await bundleMain({ outfile: 'drerer.esm.min.js', format: 'esm', minify: true })
 
 // esbuild no longer ships a `umd` output format, so the UMD artifacts wrap an
 // IIFE bundle in the standard UMD header. The IIFE body is turned into a
@@ -166,8 +166,8 @@ const bundleUmd = async ({ outfile, minify = false }) => {
     fs.writeFileSync(filePath, code.replace(/var drerer\s*=/, 'return'))
 }
 
-await bundleUmd({ outfile:'drerer.umd.js' })
-await bundleUmd({ outfile:'drerer.umd.min.js', minify:true })
+await bundleUmd({ outfile: 'drerer.umd.js' })
+await bundleUmd({ outfile: 'drerer.umd.min.js', minify: true })
 
 // 4. Emit the fill-worker bundles.
 const bundleFill = ({ outfile, format, minify = false }) => esbuild.build({
@@ -180,10 +180,10 @@ const bundleFill = ({ outfile, format, minify = false }) => esbuild.build({
     outfile: path.join(outDir, outfile),
 })
 
-await bundleFill({ outfile:'drerer.fill.esm.js', format:'esm' })
-await bundleFill({ outfile:'drerer.fill.cjs', format:'cjs' })
-await bundleFill({ outfile:'drerer.fill.esm.min.js', format:'esm', minify:true })
-await bundleFill({ outfile:'drerer.fill.cjs.min.cjs', format:'cjs', minify:true })
+await bundleFill({ outfile: 'drerer.fill.esm.js', format: 'esm' })
+await bundleFill({ outfile: 'drerer.fill.cjs', format: 'cjs' })
+await bundleFill({ outfile: 'drerer.fill.esm.min.js', format: 'esm', minify: true })
+await bundleFill({ outfile: 'drerer.fill.cjs.min.cjs', format: 'cjs', minify: true })
 
 // 5. Verify every declared artifact and its source map exists.
 const artifacts = [
