@@ -340,7 +340,13 @@ test('declarations are emitted', () => {
 })
 
 test('npm pack --dry-run includes only the intended distribution surface', () => {
-    const output = execFileSync('npm', ['pack', '--dry-run', '--json'], { cwd: pkgDir }).toString()
+    const output = execFileSync('npm', ['pack', '--dry-run', '--json'], {
+        cwd: pkgDir,
+        env: {
+            ...process.env,
+            npm_config_cache: path.join(tmp, 'npm-cache'),
+        },
+    }).toString()
     const [{ files }] = JSON.parse(output)
     const paths = files.map((file) => file.path)
 
