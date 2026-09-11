@@ -16,7 +16,23 @@ Draw things on an HTML canvas. This is a fork of
 [See a live demo](https://nichoth.github.io/drerer/)
 
 <details><summary><h2>Contents</h2></summary>
+
 <!-- toc -->
+
+- [Install](#install)
+- [Example](#example)
+  * [JS](#js)
+- [Modules](#modules)
+  * [ESM](#esm)
+  * [Common JS](#common-js)
+  * [Minified](#minified)
+  * [UMD](#umd)
+  * [CDN](#cdn)
+  * [Fill worker](#fill-worker)
+  * [pre-built JS](#pre-built-js)
+
+<!-- tocstop -->
+
 </details>
 
 ## Install
