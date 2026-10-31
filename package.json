@@ -48,7 +48,6 @@
     "test:browser": "esbuild ./test/index.ts --bundle | tapout",
     "build": "node scripts/build.mjs",
     "build-example": "mkdir -p ./public && rm -rf ./public/* && VITE_DEBUG_MODE=staging vite --mode staging --base=\"/repo-name\" build",
-    "build-docs": "typedoc ./src/index.ts",
     "start": "vite",
     "toc": "markdown-toc --maxdepth 3 -i README.md",
     "preversion": "npm run lint",
